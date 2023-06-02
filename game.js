@@ -14,11 +14,13 @@ var animating = false;
 
 //Events 
 //Start the game if its not already started
-$(this).on("keydown", (event) => {
-    if(!gameStarted && event.key === "a"){
+$("#start").on("mousedown", (event) => {
+    if(!gameStarted){
         gameStarted = true;
         $("h1").text("Level 0");
-        newSequence();}
+        newSequence();
+        $("#start").addClass("invis");
+    }
 })
 
 //Detects a users button press
@@ -31,7 +33,7 @@ $(".btn").on("mousedown", (ev) => {
 //Function called when user presses a button
 function onUserPress(currentColor)
 {   
-    if(!animating){
+    if(!animating && gameStarted){
         buttonColors.get(currentColor).play();
 
         userClickedPattern.push(currentColor);
@@ -67,9 +69,10 @@ function gameOver(){
     setTimeout(() => {
         gameStarted = false;
         level = 0;
-        $("#level-title").text("Press A Key to Start");
+        $("#level-title").text("Press Start To Begin");
         gamePattern = [];
         userClickedPattern = [];
+        $("#start").removeClass("invis");
     }, 1000);
 }
 
